@@ -1,3 +1,4 @@
+:: Copyright 2020 Laksamadi Guko All rights reserved
 @echo off
 color 8F
 mode CON:cols=55 lines=20
@@ -8,9 +9,8 @@ set rootdir=%~dp0mikhmon
 set title=Mikhmon Webserver
 set c=by Laksamadi Guko
 
-
 echo.
-:splash
+echo.
 echo 	    MMNdhyssssssssssssssssssyhdNMM
 echo 	    MhsssssssssssssssssssssssssshM
 echo 	    hsssssssso++++++++++ossssssssh
@@ -30,7 +30,7 @@ echo.
 echo 	    	    MIKHMON SERVER
 echo 		  by Laksamadi Guko
 echo.
-timeout /t 1 >nul
+timeout /t 2 >nul
 goto check
 
 :menu
@@ -51,19 +51,17 @@ exit
 
 :stop
 taskkill /f /IM m-server.exe >nul
-echo  Exit
-timeout /t 1 >nul
-exit
+goto startX
+
 
 :check
 cls
 tasklist /nh /fi "IMAGENAME eq m-server.exe" | find /i "m-server.exe" >nul && (
 echo  %title% %c%
 echo.
-echo  Server is running
-
+echo  Checking server...
 timeout /t 1 >nul
-goto menu
+goto startn
 ) || (
 goto start
 )
@@ -74,7 +72,7 @@ tasklist /nh /fi "IMAGENAME eq m-server.exe" | find /i "m-server.exe" >nul && (
 title %url%
 echo  %title% %c%
 echo.
-echo  Server is running
+echo  Checking server...
 timeout /t 1 >nul
 goto open
 ) || (
@@ -104,6 +102,33 @@ runbg m-server.exe -S 0.0.0.0:8080 -t "%rootdir%"
 goto dcheck
 )
 
+:startn
+cls
+echo %title% %c%
+echo.
+netstat -o -n -a | find "LISTENING" | find "0.0.0.0:8080" >nul && (
+set port=8080
+goto open
+)  || (
+set port=8088
+goto open
+)
+
+:startX
+cls
+echo  %title% %c%
+echo.
+echo  Server not running
+echo.
+echo  1-Start Server
+echo  0-Exit
+echo.
+:nn
+set /P Mm= Type 1 or 0 then press ENTER:
+if not defined Mm GOTO nn
+if %Mm%==1 goto check
+if %m%==0 goto quit
+
 :open
 cls
 echo  %title% %c%
@@ -112,33 +137,41 @@ echo  Server is running
 echo  http://127.0.0.1:%port%
 echo.
 echo  Open in:
-echo  1-Chrome
+echo  1-Google Chrome
 echo  2-Firefox
+echo  3-Microsoft Edge
 echo.
-echo  Exit:
+echo  9-Stop Server
 echo  0-Exit
 echo.
 :o
-set /P M= Type 1, 2 or 0 then press ENTER:
+set /P M= Type 1, 2, 9 or 0 then press ENTER:
 if not defined M GOTO o
 if %M%==1 goto chrome
 if %M%==2 goto firefox
+if %M%==3 goto edge
+if %M%==9 goto stop
 if %M%==0 goto quit
 
 :chrome
 timeout /t 1 >nul
-echo  Open Chrome
+echo  Open Google Chrome
 start chrome http://127.0.0.1:%port%
-timeout /t 2 >nul
-echo  Exit
 timeout /t 1 >nul
-exit
+goto open
+
 
 :firefox
 timeout /t 1 >nul
 echo  Open FireFox
 start firefox http://127.0.0.1:%port%
-timeout /t 2 >nul
-echo  Exit
 timeout /t 1 >nul
-exit
+goto open
+
+:edge
+timeout /t 1 >nul
+echo  Open Microsoft Edge
+start microsoftedge http://127.0.0.1:%port% 
+start msedge http://127.0.0.1:%port% 
+timeout /t 1 >nul
+goto open
