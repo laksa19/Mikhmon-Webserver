@@ -1,4 +1,4 @@
-:: Copyright 2020 Laksamadi Guko 
+:: Copyright 2020 Laksamadi Guko all rights reserved
 @echo off
 color 8F
 mode CON:cols=55 lines=20
@@ -138,7 +138,7 @@ echo  http://127.0.0.1:%port%
 echo.
 echo  Open in:
 echo  1-Google Chrome
-echo  2-Firefox
+echo  2-Mozilla Firefox
 echo  3-Microsoft Edge
 echo.
 echo  9-Stop Server
