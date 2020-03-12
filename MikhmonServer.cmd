@@ -1,4 +1,4 @@
-:: Copyright 2020 Laksamadi Guko All rights reserved
+:: Copyright 2020 Laksamadi Guko 
 @echo off
 color 8F
 mode CON:cols=55 lines=20
@@ -145,13 +145,13 @@ echo  9-Stop Server
 echo  0-Exit
 echo.
 :o
-set /P M= Type 1, 2, 9 or 0 then press ENTER:
-if not defined M GOTO o
-if %M%==1 goto chrome
-if %M%==2 goto firefox
-if %M%==3 goto edge
-if %M%==9 goto stop
-if %M%==0 goto quit
+set /P Mo= Type 1, 2, 9 or 0 then press ENTER:
+if not defined Mo GOTO o
+if %Mo%==1 goto chrome
+if %Mo%==2 goto firefox
+if %Mo%==3 goto edge
+if %Mo%==9 goto stop
+if %Mo%==0 goto quit
 
 :chrome
 timeout /t 1 >nul
