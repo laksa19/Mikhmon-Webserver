@@ -171,7 +171,6 @@ goto open
 :edge
 timeout /t 1 >nul
 echo  Open Microsoft Edge
-start microsoftedge http://127.0.0.1:%port% 
 start msedge http://127.0.0.1:%port% 
 timeout /t 1 >nul
 goto open
